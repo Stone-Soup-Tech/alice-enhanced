@@ -9,3 +9,6 @@ updates:
       interval: "daily"
     reviewers:
       - "MihMihai"
+    groups:
+      dart:
+        applies-to: version-updates
