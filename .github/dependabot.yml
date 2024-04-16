@@ -1,5 +1,6 @@
 # To get started with Dependabot version updates, you'll need to specify which
 # package ecosystems to update and where the package manifests are located.
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#versioning-strategy
 
 version: 2
 updates:
@@ -9,6 +10,7 @@ updates:
       interval: "daily"
     reviewers:
       - "MihMihai"
+    versioning-strategy: auto # uses "increase" for apps and "widen" for libraries.
     groups:
       dart:
         applies-to: version-updates
