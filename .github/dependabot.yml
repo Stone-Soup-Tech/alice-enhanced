@@ -10,5 +10,5 @@ updates:
     reviewers:
       - "MihMihai"
     groups:
-      dart:
+      dev-dependencies:
         applies-to: version-updates
