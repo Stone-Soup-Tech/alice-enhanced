@@ -7,3 +7,8 @@ updates:
   directory: "/" # Location of package manifests
   schedule:
     interval: "daily"
+  reviewers:
+    - "MihMihai"
+  groups:
+    dart:
+      applies-to: version-updates
