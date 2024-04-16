@@ -3,12 +3,12 @@
 
 version: 2
 updates:
-- package-ecosystem: "pub" # See documentation for possible values
-  directory: "/" # Location of package manifests
-  schedule:
-    interval: "daily"
-  reviewers:
-    - "MihMihai"
-  groups:
-    dart:
-      applies-to: version-updates
+  - package-ecosystem: "pub" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "MihMihai"
+    groups:
+      dart:
+        applies-to: version-updates
