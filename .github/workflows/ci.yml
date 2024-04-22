@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Flutter Action
         uses: subosito/flutter-action@v2
       - name: Check format
-        run: dart format . --set-exit-if-changed
+        run: dart format --set-exit-if-changed .
 
   lint:
     name: Lint
@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Flutter Action
         uses: subosito/flutter-action@v2
       - name: Install Package Dependencies
