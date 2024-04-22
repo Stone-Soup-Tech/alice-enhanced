@@ -22,7 +22,7 @@ updates:
 
   # Keep the Android dependencies of the library up to date
   - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/android" # Location of package manifests
+    directory: "/android/" # Location of package manifests
     schedule:
       interval: "daily"
     reviewers:
@@ -37,7 +37,7 @@ updates:
 
   # Keep the Android dependencies of the example project up to date
   - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/example/android" # Location of package manifests
+    directory: "/example/android/" # Location of package manifests
     schedule:
       interval: "daily"
     reviewers:
