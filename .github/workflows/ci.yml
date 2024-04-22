@@ -14,8 +14,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Flutter Action
         uses: subosito/flutter-action@v2
-      - name: Check format
+        with:
+          channel: 'stable'
+      - name: Check format for library
         run: dart format --set-exit-if-changed .
+      - name: Check format for example project
+        run: dart format --set-exit-if-changed example
 
   lint:
     name: Lint
@@ -26,10 +30,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Flutter Action
         uses: subosito/flutter-action@v2
-      - name: Install Package Dependencies
-        run: flutter packages get
-      - name: Get dependencies for example
+        with:
+          channel: 'stable'
+      - name: Get dependencies for library
+        run: flutter pub get
+      - name: Lint library using flutter analyze
+        run: flutter analyze .
+      - name: Get dependencies for example project
         run: flutter pub get
         working-directory: example
-      - name: Lint using flutter analyze
-        run: flutter analyze .
+      - name: Lint example project using flutter analyze
+        run: flutter analyze example
