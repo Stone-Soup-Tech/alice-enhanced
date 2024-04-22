@@ -1,33 +1,18 @@
-group 'com.jhomlala.alice'
-version '1.0-SNAPSHOT'
+//group 'com.jhomlala.alice'
+//version '1.0-SNAPSHOT'
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23"
-    }
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
 }
-
-rootProject.allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     namespace 'com.jhomlala.alice'
     compileSdkVersion 34
 
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -45,4 +30,5 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }
