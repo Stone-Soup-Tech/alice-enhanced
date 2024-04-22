@@ -4,9 +4,25 @@
 
 version: 2
 updates:
-  # Keep the Fluttter dependencies up to date
+  # Keep the Fluttter dependencies of the library up to date
   - package-ecosystem: "pub" # See documentation for possible values
     directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: auto # uses "increase" for apps and "widen" for libraries.
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"       # A wildcard that matches all dependencies in the package
+
+  # Keep the Fluttter dependencies of the example project up to date
+  - package-ecosystem: "pub" # See documentation for possible values
+    directory: "/example/" # Location of package manifests
     schedule:
       interval: "daily"
     reviewers:
