@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  chopper: ^7.0.9
   path_provider:
 
 dev_dependencies:

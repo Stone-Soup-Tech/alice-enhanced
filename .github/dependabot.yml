@@ -13,7 +13,7 @@ updates:
       - "MihMihai"
     labels:
       - "dependencies"
-    versioning-strategy: auto # uses "increase" for apps and "widen" for libraries.
+    versioning-strategy: increase-if-necessary # uses "increase" for apps and "widen" for libraries.
     groups:
       dart:
         applies-to: version-updates
@@ -29,7 +29,7 @@ updates:
       - "MihMihai"
     labels:
       - "dependencies"
-    versioning-strategy: auto # uses "increase" for apps and "widen" for libraries.
+    versioning-strategy: increase-if-necessary # uses "increase" for apps and "widen" for libraries.
     groups:
       dart:
         applies-to: version-updates
