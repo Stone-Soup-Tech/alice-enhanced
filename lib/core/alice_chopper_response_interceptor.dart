@@ -9,8 +9,7 @@ import 'package:alice/model/alice_http_response.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart';
 
-class AliceChopperInterceptor
-    implements chopper.ResponseInterceptor, chopper.RequestInterceptor {
+class AliceChopperInterceptor implements chopper.Interceptor {
   /// AliceCore instance
   final AliceCore aliceCore;
 
@@ -35,9 +34,15 @@ class AliceChopperInterceptor
     return hashCodeSum.hashCode;
   }
 
-  /// Handles chopper request and creates alice http call
+  /// Handles chopper request and creates alice http call.
+  /// Handles chopper response and adds data to existing alice http call.
   @override
-  FutureOr<chopper.Request> onRequest(chopper.Request request) async {
+  FutureOr<chopper.Response<BodyType>> intercept<BodyType>(
+    chopper.Chain<BodyType> chain,
+  ) async {
+    // Start saving the request details.
+    final request = chain.request;
+
     try {
       final headers = request.headers;
       headers['alice_token'] = DateTime.now().millisecondsSinceEpoch.toString();
@@ -101,13 +106,10 @@ class AliceChopperInterceptor
     } catch (exception) {
       AliceUtils.log(exception.toString());
     }
-    return request;
-  }
 
-  /// Handles chopper response and adds data to existing alice http call
-  @override
-  // ignore: strict_raw_type
-  FutureOr<chopper.Response> onResponse(chopper.Response response) {
+    // Make the request to retrieve the response
+    final response = await chain.proceed(request);
+
     final httpResponse = AliceHttpResponse()..status = response.statusCode;
     if (response.body == null) {
       httpResponse
