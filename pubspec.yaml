@@ -27,7 +27,7 @@ dependencies:
   url_launcher: ^6.2.6
 
 dev_dependencies:
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^6.0.0
 
 flutter:
   plugin:
