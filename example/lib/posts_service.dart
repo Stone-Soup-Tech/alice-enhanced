@@ -1,4 +1,4 @@
-import "dart:async";
+import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 
@@ -9,14 +9,14 @@ part 'posts_service.chopper.dart';
 abstract class PostsService extends ChopperService {
   // helper methods that help you instantiate your service
   static PostsService create([ChopperClient? client]) =>
-      _$PostsService(client!);
+      _$PostsService(client);
 
   @Get(path: '/{id}')
-  Future<Response> getPost(@Path() String id);
+  Future<Response<dynamic>> getPost(@Path() String id);
 
   @Post(path: '/')
-  Future<Response> postPost(@Body() String? body);
+  Future<Response<dynamic>> postPost(@Body() String? body);
 
   @Put(path: '/{id}')
-  Future<Response> putPost(@Path() String id, @Body() String? body);
+  Future<Response<dynamic>> putPost(@Path() String id, @Body() String? body);
 }
