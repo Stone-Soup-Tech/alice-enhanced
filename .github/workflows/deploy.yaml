@@ -45,8 +45,8 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
           echo "NEW_TAG=v$NEW_VERSION" >> "$GITHUB_ENV"
 
-          # git config --global user.name 'CI'
-          # git config --global user.email 'mobile.ci.cd@investre.eu'
+          git config --global user.name 'CI'
+          git config --global user.email 'ci@github.com'
           
           # Push the commit with the new version
           git add .
