@@ -32,30 +32,29 @@ jobs:
           BRANCH_NAME=${{ github.ref_name }}
           BUMP_TYPE=${{ github.event.inputs.bump_type }}
 
-          NEW_VERSION=$(dart run cider version)
-          IFS='.' read -r -a versionArray <<< "$NEW_VERSION"
+          # Get the current version and split the numbers into an array
+          CURRENT_VERSION=$(dart run cider version)
+          IFS='.' read -ra versionArray <<< "$CURRENT_VERSION"
 
-          if [[ "$versionArray[2]" == "9" ]]; then
-            $versionArray[2] = "0"
-            if [[ "$versionArray[1]" == "9" ]]; then
-              $versionArray[1] = "0"
-              $versionArray[0] = "$(($versionArray[0] + 1))"
+          # Increment either the patch, minor or major, depending on their value.
+          # 0.5.8 -> 0.5.9, 0.5.9 -> 0.6.0, 0.9.9 -> 1.0.0
+          if [[ "${versionArray[2]}" == "9" ]]; then
+            versionArray[2]="0"
+            if [[ "${versionArray[1]}" == "9" ]]; then
+              versionArray[1]="0"
+              versionArray[0]="$((${versionArray[0]} + 1))"
             else
-              $versionArray[1] = "$(($versionArray[1] + 1))"
+              versionArray[1]="$((${versionArray[1]} + 1))"
             fi
           else
-            $versionArray[2] = "$(($versionArray[2] + 1))"
+            versionArray[2]="$((${versionArray[2]} + 1))"
           fi
 
-          IFS='.';NEW_VERSION="${ids[*]}";IFS=$' \t\n'
+          # Construct the new version into a string
+          IFS='.';NEW_VERSION="${versionArray[*]}";IFS=$' \t\n'
 
-          # if [[ "$BUMP_TYPE" == "M" ]]; then
-          #   dart run cider bump major
-          # elif [[ "$BUMP_TYPE" == "m" ]]; then
-          #   dart run cider bump minor
-          # elif [[ "$BUMP_TYPE" == "p" ]]; then
-          #   dart run cider bump patch
-          # fi
+          # Set the new version
+          dart run cider version $NEW_VERSION
 
           # Save the the new version and new tag in env variables
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
