@@ -11,10 +11,10 @@ name: Deploy
 # Configure manual trigger
 on:
   workflow_dispatch:
-    inputs:
-      bump_type:
-        description: 'Version increment (M=MAJOR, m=MINOR, p=PATCH)'
-        required: true
+    # inputs:
+    #   bump_type:
+    #     description: 'Version increment (M=MAJOR, m=MINOR, p=PATCH)'
+    #     required: true
 
 jobs:
   Deploy:
@@ -32,21 +32,37 @@ jobs:
           BRANCH_NAME=${{ github.ref_name }}
           BUMP_TYPE=${{ github.event.inputs.bump_type }}
 
-          if [[ "$BUMP_TYPE" == "M" ]]; then
-            dart run cider bump major
-          elif [[ "$BUMP_TYPE" == "m" ]]; then
-            dart run cider bump minor
-          elif [[ "$BUMP_TYPE" == "p" ]]; then
-            dart run cider bump patch
+          NEW_VERSION=$(dart run cider version)
+          IFS='.' read -r -a versionArray <<< "$NEW_VERSION"
+
+          if [[ "$versionArray[2]" == "9" ]]; then
+            $versionArray[2] = "0"
+            if [[ "$versionArray[1]" == "9" ]]; then
+              $versionArray[1] = "0"
+              $versionArray[0] = "$(($versionArray[0] + 1))"
+            else
+              $versionArray[1] = "$(($versionArray[1] + 1))"
+            fi
+          else
+            $versionArray[2] = "$(($versionArray[2] + 1))"
           fi
 
+          IFS='.';NEW_VERSION="${ids[*]}";IFS=$' \t\n'
+
+          # if [[ "$BUMP_TYPE" == "M" ]]; then
+          #   dart run cider bump major
+          # elif [[ "$BUMP_TYPE" == "m" ]]; then
+          #   dart run cider bump minor
+          # elif [[ "$BUMP_TYPE" == "p" ]]; then
+          #   dart run cider bump patch
+          # fi
+
           # Save the the new version and new tag in env variables
-          NEW_VERSION=$(dart run cider version)
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
           echo "NEW_TAG=v$NEW_VERSION" >> "$GITHUB_ENV"
 
-          git config --global user.name 'CI'
-          git config --global user.email 'ci@github.com'
+          git config --global user.name "Continuous Integration"
+          git config --global user.email "username@users.noreply.github.com"
           
           # Push the commit with the new version
           git add .
