@@ -29,7 +29,6 @@ jobs:
       - run: flutter pub get
       - name: Bumping version! ⚠️ Please wait for the workflow to finish! ⚠️
         run: |
-          BRANCH_NAME=${{ github.ref_name }}
           BUMP_TYPE=${{ github.event.inputs.bump_type }}
 
           # Get the current version and split the numbers into an array
@@ -71,32 +70,32 @@ jobs:
           git tag -a v$NEW_VERSION -m "Version $NEW_VERSION"
           git push origin v$NEW_VERSION
 
-      # - name: Generate release notes
-      #   run: |
-      #     # Fetch the last used tag
-      #     LAST_TAG=$(git describe --tags --abbrev=0 --match "v*")
+      - name: Generate release notes
+        run: |
+          # Fetch the last used tag
+          LAST_TAG=$(git describe --tags --abbrev=0 --match "v*")
 
-      #     # Get the generated release notes using the Github API
-      #     RESPONSE=$(gh api \
-      #       --method POST \
-      #       -H "Accept: application/vnd.github+json" \
-      #       -H "X-GitHub-Api-Version: 2022-11-28" \
-      #       /repos/$GITHUB_REPOSITORY/releases/generate-notes \
-      #       -f tag_name='${{ env.NEW_TAG }}' \
-      #       -f target_commitish='main' \
-      #       -f previous_tag_name=$LAST_TAG)
+          # Get the generated release notes using the Github API
+          RESPONSE=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/$GITHUB_REPOSITORY/releases/generate-notes \
+            -f tag_name='${{ env.NEW_TAG }}' \
+            -f target_commitish='main' \
+            -f previous_tag_name=$LAST_TAG)
 
-      #     # Retrieve the release notes from the response and save them to a file for the next step.
-      #     echo $RESPONSE | jq -r ".body" >> release_notes.txt
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Retrieve the release notes from the response and save them to a file for the next step.
+          echo $RESPONSE | jq -r ".body" >> release_notes.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Create release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     name: "${{ env.NEW_TAG }}"
-      #     tag: ${{ env.NEW_TAG }}
-      #     bodyFile: release_notes.txt
-      #     generateReleaseNotes: false
-      #     prerelease: true
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          name: "${{ env.NEW_TAG }}"
+          tag: ${{ env.NEW_TAG }}
+          bodyFile: release_notes.txt
+          generateReleaseNotes: false
+          prerelease: true
   
