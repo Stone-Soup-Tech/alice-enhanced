@@ -10,11 +10,7 @@ name: Deploy
 
 # Configure manual trigger
 on:
-  workflow_dispatch:
-    # inputs:
-    #   bump_type:
-    #     description: 'Version increment (M=MAJOR, m=MINOR, p=PATCH)'
-    #     required: true
+  workflow_dispatch
 
 jobs:
   Deploy:
