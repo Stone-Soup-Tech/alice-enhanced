@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       bump_type:
-        description: 'Version increment(M=MAJOR, m=MINOR, p=PATCH)'
+        description: 'Version increment (M=MAJOR, m=MINOR, p=PATCH)'
         required: true
 
 jobs:
@@ -33,15 +33,15 @@ jobs:
           BUMP_TYPE=${{ github.event.inputs.bump_type }}
 
           if [[ "$BUMP_TYPE" == "M" ]]; then
-            cider bump major
+            dart run cider bump major
           elif [[ "$BUMP_TYPE" == "m" ]]; then
-            cider bump minor
+            dart run cider bump minor
           elif [[ "$BUMP_TYPE" == "p" ]]; then
-            cider bump patch
+            dart run cider bump patch
           fi
 
           # Save the the new version and new tag in env variables
-          NEW_VERSION=$(cider version)
+          NEW_VERSION=$(dart run cider version)
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
           echo "NEW_TAG=v$NEW_VERSION" >> "$GITHUB_ENV"
 
