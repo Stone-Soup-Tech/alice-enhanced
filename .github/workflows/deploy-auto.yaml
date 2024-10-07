@@ -11,7 +11,7 @@ name: Deploy Auto
 
 # Configure manual trigger
 on:
-  pull_request:
+  pull_request_target:
     types:
       - closed
     branches:
@@ -23,5 +23,3 @@ jobs:
       contents: write
     if: github.event.pull_request.merged == true
     uses: ./.github/workflows/deploy.yaml
-    secrets: inherit
-  
