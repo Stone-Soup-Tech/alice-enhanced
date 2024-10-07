@@ -10,10 +10,13 @@ name: Deploy
 
 # Configure manual trigger
 on:
-  workflow_dispatch
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
   Deploy:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

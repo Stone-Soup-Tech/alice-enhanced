@@ -1,0 +1,23 @@
+name: Deploy Auto
+# This workflow is MANUALLY triggered from Github.
+# It starts by checking out the code, setting up Flutter, and installing the project dependencies.
+# Then it bumps the version based on the branch name.
+# The changes are committed and pushed to the repository.
+# Next, a Git tag is created with the new version and pushed to the repository.
+# Finally, the workflow triggers a deployment to Codemagic.
+# Whenever you manually trigger a workflow, please wait for it to finish before doing a merge between the branch you called the workflow on and any other branch.
+# This ensures that the commit in which the version is bumped is properly pushed to Github.
+
+# Configure manual trigger
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  DeployAuto:
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/deploy.yaml
+  
