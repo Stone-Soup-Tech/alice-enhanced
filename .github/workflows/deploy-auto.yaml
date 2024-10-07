@@ -1,5 +1,6 @@
 name: Deploy Auto
-# This workflow is MANUALLY triggered from Github.
+# This workflow is AUTOMATICALLY triggered from Github when a PR is merged in the main branch.
+# The workflow calls the deploy.yaml workflow which does the following:
 # It starts by checking out the code, setting up Flutter, and installing the project dependencies.
 # Then it bumps the version based on the branch name.
 # The changes are committed and pushed to the repository.
@@ -18,6 +19,9 @@ on:
 
 jobs:
   DeployAuto:
+    permissions:
+      contents: write
     if: github.event.pull_request.merged == true
     uses: ./.github/workflows/deploy.yaml
+    secrets: inherit
   
