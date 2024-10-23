@@ -58,6 +58,11 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
           echo "NEW_TAG=v$NEW_VERSION" >> "$GITHUB_ENV"
 
+          # Fetch the last used tag and save it in the env variables
+          LAST_TAG=$(git describe --tags --abbrev=0)
+          echo $LAST_TAG
+          echo "LAST_TAG=$LAST_TAG" >> "$GITHUB_ENV"
+
           git config --global user.name "Continuous Integration"
           git config --global user.email "username@users.noreply.github.com"
           
@@ -71,9 +76,6 @@ jobs:
 
       - name: Generate release notes
         run: |
-          # Fetch the last used tag
-          LAST_TAG=$(git describe --tags --abbrev=0 --match "v*")
-
           # Get the generated release notes using the Github API
           RESPONSE=$(gh api \
             --method POST \
@@ -82,7 +84,7 @@ jobs:
             /repos/$GITHUB_REPOSITORY/releases/generate-notes \
             -f tag_name='${{ env.NEW_TAG }}' \
             -f target_commitish='main' \
-            -f previous_tag_name=$LAST_TAG)
+            -f previous_tag_name='${{ env.LAST_TAG }}')
 
           # Retrieve the release notes from the response and save them to a file for the next step.
           echo $RESPONSE | jq -r ".body" >> release_notes.txt
