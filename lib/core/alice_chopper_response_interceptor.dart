@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:alice/core/alice_core.dart';
 import 'package:alice/core/alice_utils.dart';
+import 'package:alice/model/alice_form_data_file.dart';
+import 'package:alice/model/alice_from_data_field.dart';
 import 'package:alice/model/alice_http_call.dart';
 import 'package:alice/model/alice_http_request.dart';
 import 'package:alice/model/alice_http_response.dart';
 import 'package:chopper/chopper.dart' as chopper;
+import 'package:chopper/chopper.dart';
 import 'package:http/http.dart';
 
 class AliceChopperInterceptor implements chopper.Interceptor {
@@ -43,66 +47,55 @@ class AliceChopperInterceptor implements chopper.Interceptor {
     // Start saving the request details.
     final request = chain.request;
 
+    /// The alice_token header is added to the request in order to keep track
+    /// of the request in the AliceCore instance.
+    final requestId = getRequestHashCode(
+      /// The alice_token header is added to the request in order to keep track
+      /// of the request in the AliceCore instance.
+      applyHeader(
+        chain.request,
+        'alice_token',
+        DateTime.now().millisecondsSinceEpoch.toString(),
+      ),
+    );
+
     try {
-      final headers = request.headers;
-      headers['alice_token'] = DateTime.now().millisecondsSinceEpoch.toString();
-      final changedRequest = request.copyWith(headers: headers);
-      final baseRequest = await changedRequest.toBaseRequest();
-
-      final call = AliceHttpCall(getRequestHashCode(baseRequest));
-      var endpoint = '';
-      var server = '';
-
-      final split = request.url.toString().split('/');
-      if (split.length > 2) {
-        server = split[1] + split[2];
-      }
-      if (split.length > 4) {
-        endpoint = '/';
-        for (var splitIndex = 3; splitIndex < split.length; splitIndex++) {
-          // ignore: use_string_buffers
-          endpoint += '${split[splitIndex]}/';
-        }
-        endpoint = endpoint.substring(0, endpoint.length - 1);
-      }
-
-      call
-        ..method = request.method
-        ..endpoint = endpoint
-        ..server = server
-        ..client = 'Chopper';
-      if (request.url.toString().contains('https')) {
-        call.secure = true;
-      }
-
-      final aliceHttpRequest = AliceHttpRequest();
-
-      if (request.body == null) {
-        aliceHttpRequest
-          ..size = 0
-          ..body = '';
-      } else {
-        aliceHttpRequest
-          ..size = utf8.encode(request.body as String).length
-          ..body = request.body;
-      }
-      aliceHttpRequest
-        ..time = DateTime.now()
-        ..headers = request.headers;
-
-      String? contentType = 'unknown';
-      if (request.headers.containsKey('Content-Type')) {
-        contentType = request.headers['Content-Type'];
-      }
-      aliceHttpRequest
-        ..contentType = contentType
-        ..queryParameters = request.parameters;
-
-      call
-        ..request = aliceHttpRequest
-        ..response = AliceHttpResponse();
-
-      aliceCore.addCall(call);
+      aliceCore.addCall(
+        AliceHttpCall(requestId)
+          ..method = chain.request.method
+          ..endpoint =
+              chain.request.url.path.isEmpty ? '/' : chain.request.url.path
+          ..server = chain.request.url.host
+          ..client = 'Chopper'
+          ..secure = chain.request.url.scheme == 'https'
+          ..uri = chain.request.url.toString()
+          ..request = (AliceHttpRequest()
+            ..size = switch (chain.request.body) {
+              final dynamic body when body is String =>
+                utf8.encode(body).length,
+              final dynamic body when body is List<int> => body.length,
+              final dynamic body when body == null => 0,
+              _ => utf8.encode(body.toString()).length,
+            }
+            ..body = chain.request.body ?? ''
+            ..time = DateTime.now()
+            ..headers = chain.request.headers
+            ..contentType =
+                chain.request.headers[HttpHeaders.contentTypeHeader] ??
+                    'unknown'
+            ..formDataFields = chain.request.parts
+                .whereType<PartValue<String>>()
+                .map(
+                  (field) => AliceFormDataField(field.name, field.value),
+                )
+                .toList()
+            ..formDataFiles = chain.request.parts
+                .whereType<PartValueFile<String>>()
+                .map((file) => AliceFormDataFile(file.value, '', 0))
+                .toList()
+            ..queryParameters = chain.request.parameters)
+          ..response = AliceHttpResponse(),
+      );
     } catch (exception) {
       AliceUtils.log(exception.toString());
     }
