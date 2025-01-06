@@ -141,11 +141,13 @@ class AliceChopperInterceptor implements chopper.Interceptor {
             stackTrace: stackTrace,
           ),
         )
+
         /// Add empty response to Alice core
         ..addResponse(
           AliceHttpResponse()..status = -1,
           requestId,
         )
+
         /// Add error to Alice core
         ..addError(
           AliceHttpError()
