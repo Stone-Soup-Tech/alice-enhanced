@@ -26,37 +26,16 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter pub get
-      - name: Bumping version! ⚠️ Please wait for the workflow to finish! ⚠️
+      - name: Generating the version tag! ⚠️ Please wait for the workflow to finish! ⚠️
         run: |
           BUMP_TYPE=${{ github.event.inputs.bump_type }}
 
           # Get the current version and split the numbers into an array
-          CURRENT_VERSION=$(dart run cider version)
-          IFS='.' read -ra versionArray <<< "$CURRENT_VERSION"
-
-          # Increment either the patch, minor or major, depending on their value.
-          # 0.5.8 -> 0.5.9, 0.5.9 -> 0.6.0, 0.9.9 -> 1.0.0
-          if [[ "${versionArray[2]}" == "9" ]]; then
-            versionArray[2]="0"
-            if [[ "${versionArray[1]}" == "9" ]]; then
-              versionArray[1]="0"
-              versionArray[0]="$((${versionArray[0]} + 1))"
-            else
-              versionArray[1]="$((${versionArray[1]} + 1))"
-            fi
-          else
-            versionArray[2]="$((${versionArray[2]} + 1))"
-          fi
-
-          # Construct the new version into a string
-          IFS='.';NEW_VERSION="${versionArray[*]}";IFS=$' \t\n'
-
-          # Set the new version
-          dart run cider version $NEW_VERSION
-
+          VERSION=$(dart run cider version)
+          
           # Save the the new version and new tag in env variables
-          echo "NEW_VERSION=$NEW_VERSION" >> "$GITHUB_ENV"
-          echo "NEW_TAG=v$NEW_VERSION" >> "$GITHUB_ENV"
+          echo "NEW_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "NEW_TAG=v$VERSION" >> "$GITHUB_ENV"
 
           # Fetch the last used tag and save it in the env variables
           LAST_TAG=$(git describe --tags --abbrev=0)
@@ -65,14 +44,9 @@ jobs:
 
           git config --global user.name "Continuous Integration"
           git config --global user.email "username@users.noreply.github.com"
-          
-          # Push the commit with the new version
-          git add .
-          git commit -m "Bump version to $NEW_VERSION"
-          git push
 
-          git tag -a v$NEW_VERSION -m "Version $NEW_VERSION"
-          git push origin v$NEW_VERSION
+          git tag -a v$VERSION -m "Version $VERSION"
+          git push origin v$VERSION
 
       - name: Generate release notes
         run: |
