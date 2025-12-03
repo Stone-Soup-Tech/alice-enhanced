@@ -21,7 +21,7 @@ updates:
 
   # Examples projects - Android
   - package-ecosystem: "gradle"
-    directory: "/examples/"
+    directory: "/examples/alice/android/"
     schedule:
       interval: "daily"
       day: "wednesday"
@@ -32,78 +32,66 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice_chopper/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice_dio/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice_http/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice_http_client/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
-#  - package-ecosystem: "gradle"
-#    directory: "/examples/alice_objectbox/android/"
-#    schedule:
-#      interval: "daily"
-#      day: "wednesday"
-#    labels:
-#      - "dependencies"
-#    groups:
-#      android:
-#        applies-to: version-updates
-#        patterns:
-#          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_chopper/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_dio/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_http/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_http_client/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_objectbox/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
 
   # Github actions
   - package-ecosystem: "github-actions"
