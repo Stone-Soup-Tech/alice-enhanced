@@ -21,7 +21,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install Melos
         run: dart pub global activate melos
       - name: Bootstrap the project
@@ -45,7 +45,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install Melos
         run: dart pub global activate melos
       - name: Bootstrap the project
