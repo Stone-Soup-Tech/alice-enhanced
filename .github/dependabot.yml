@@ -8,8 +8,9 @@ updates:
   - package-ecosystem: "pub" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
-      day: "wednesday"
+      interval: "weekly"
+      day: "monday"
+    target-branch: "dev"
     versioning-strategy: widen # uses "increase" for apps and "widen" for libraries.
     labels:
       - "dependencies"
