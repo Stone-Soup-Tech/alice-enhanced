@@ -26,20 +26,28 @@ class AliceSortDialog extends StatelessWidget {
             title: Text(context.i18n(AliceTranslationKey.sortDialogTitle)),
             content: Wrap(
               children: [
-                for (final AliceCallsListSortOption sortOption
-                    in AliceCallsListSortOption.values)
-                  RadioListTile<AliceCallsListSortOption>(
-                    title: Text(_getName(context: context, option: sortOption)),
-                    value: sortOption,
-                    groupValue: currentSortOption,
-                    onChanged: (AliceCallsListSortOption? value) {
-                      if (value != null) {
-                        setState(() {
-                          currentSortOption = value;
-                        });
-                      }
-                    },
+                RadioGroup(
+                  groupValue: currentSortOption,
+                  onChanged: (AliceCallsListSortOption? value) {
+                    if (value != null) {
+                      setState(() {
+                        currentSortOption = value;
+                      });
+                    }
+                  },
+                  child: Wrap(
+                    children: [
+                      for (final AliceCallsListSortOption sortOption
+                          in AliceCallsListSortOption.values)
+                        RadioListTile<AliceCallsListSortOption>(
+                          title: Text(
+                            _getName(context: context, option: sortOption),
+                          ),
+                          value: sortOption,
+                        ),
+                    ],
                   ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -54,7 +62,7 @@ class AliceSortDialog extends StatelessWidget {
                         });
                       },
                       activeTrackColor: Colors.grey,
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                     ),
                     Text(context.i18n(AliceTranslationKey.sortDialogAscending)),
                   ],
