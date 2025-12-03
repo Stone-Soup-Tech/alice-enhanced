@@ -10,11 +10,9 @@ updates:
     schedule:
       interval: "daily"
       day: "wednesday"
-    reviewers:
-      - "MihMihai"
+    versioning-strategy: widen # uses "increase" for apps and "widen" for libraries.
     labels:
       - "dependencies"
-    versioning-strategy: widen # uses "increase" for apps and "widen" for libraries.
     groups:
       dart:
         applies-to: version-updates
