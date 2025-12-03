@@ -1,8 +1,8 @@
 name: alice_dio_example
 description: "A project to showcase dio and alice integration."
 publish_to: 'none'
-
 version: 1.0.0+3
+resolution: workspace
 
 environment:
   sdk: ">=3.7.0 <4.0.0"
@@ -18,12 +18,6 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^5.0.0
-
-dependency_overrides:
-  alice:
-    path: ../../packages/alice
-  alice_dio:
-    path: ../../packages/alice_dio
 
 flutter:
   uses-material-design: true

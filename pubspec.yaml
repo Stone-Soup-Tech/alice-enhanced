@@ -1,6 +1,42 @@
 name: alice_workspace
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.5.0 <4.0.0"
 dev_dependencies:
-  melos: ^6.0.0
+  melos: ^7.3.0
+
+workspace:
+  - examples/alice
+  - examples/alice_chopper
+  - examples/alice_dio
+  - examples/alice_http
+  - examples/alice_http_client
+  - examples/alice_objectbox
+  - packages/alice
+  - packages/alice_chopper
+  - packages/alice_dio
+  - packages/alice_http
+  - packages/alice_http_client
+  - packages/alice_objectbox
+  - packages/alice_test
+
+melos:
+  scripts:
+    analyze:
+      exec: dart analyze .
+    fix:
+      exec: dart fix --apply
+    format:
+      exec: dart format .
+    test:
+      description: Run tests in a specific package.
+      run: flutter test
+      exec:
+        concurrency: 1
+      packageFilters:
+        dirExists:
+          - test
+      # This tells Melos tests to ignore env variables passed to tests from `melos run test`
+      # as they could change the behaviour of how tests filter packages.
+      env:
+        MELOS_TEST: true
