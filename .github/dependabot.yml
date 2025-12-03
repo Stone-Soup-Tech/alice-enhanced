@@ -4,48 +4,318 @@
 
 version: 2
 updates:
-  # Keep the Flutter dependencies up to date
+  # Keep the Flutter dependencies of the library up to date
   - package-ecosystem: "pub" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
-      day: "monday"
-    target-branch: "main"
-    versioning-strategy: increase
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
     labels:
-      - "flutter dependencies"
+      - "dependencies"
+    versioning-strategy: widen # uses "increase" for apps and "widen" for libraries.
     groups:
       dart:
         applies-to: version-updates
         patterns:
           - "*"       # A wildcard that matches all dependencies in the package
-  
-  # Keep the Android dependencies up to date
-  - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/android/" # Location of package manifests
+  - package-ecosystem: "pub"
+    directory: "/packages/alice/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-    target-branch: "main"
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
     labels:
-      - "android dependencies"
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_chopper/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_dio/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_http/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_http_client/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_objectbox/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/packages/alice_test/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # Examples projects - Flutter
+  - package-ecosystem: "pub"
+    directory: "/examples/alice/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/examples/alice_chopper/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/examples/alice_dio/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/examples/alice_http/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/examples/alice_http_client/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/examples/alice_objectbox/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    versioning-strategy: widen
+    groups:
+      dart:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # Examples projects - Android
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
     groups:
       android:
         applies-to: version-updates
         patterns:
-          - "*"       # A wildcard that matches all dependencies in the package
-
-  # Keep the Github Actions dependencies up to date
-  - package-ecosystem: "github-actions" # See documentation for possible values
-    directory: "/" # Location of package manifests
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_chopper/android/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-    target-branch: "main"
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
     labels:
-      - "github dependencies"
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_dio/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_http/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_http_client/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+  - package-ecosystem: "gradle"
+    directory: "/examples/alice_objectbox/android/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
+    groups:
+      android:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # Github actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      day: "wednesday"
+    reviewers:
+      - "MihMihai"
+    labels:
+      - "dependencies"
     groups:
       github:
         applies-to: version-updates
         patterns:
-          - "*"       # A wildcard that matches all dependencies in the package
+          - "*"
