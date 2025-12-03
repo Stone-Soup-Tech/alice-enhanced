@@ -18,16 +18,16 @@ dependencies:
 
   path_provider: ^2.1.5
   permission_handler: ^12.0.0+1
-  package_info_plus: ^8.3.0
+  package_info_plus: ">=8.3.0 <10.0.0"
   open_filex: ^4.7.0
-  sensors_plus: ^6.1.1
-  share_plus: ^11.0.0
+  sensors_plus: ">=6.1.1 <8.0.0"
+  share_plus: ">=11.0.0 <13.0.0"
   chopper: ^8.1.0
   collection: ^1.19.1
   url_launcher: ^6.3.1
 
 dev_dependencies:
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ">=7.0.0 <11.0.0"
   cider: ^0.2.8
 
 flutter:
