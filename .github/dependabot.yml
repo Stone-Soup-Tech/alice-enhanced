@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    target-branch: "dev"
+    target-branch: "main"
     versioning-strategy: increase
     labels:
       - "flutter dependencies"
@@ -26,7 +26,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    target-branch: "dev"
+    target-branch: "main"
     labels:
       - "android dependencies"
     groups:
@@ -41,7 +41,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    target-branch: "dev"
+    target-branch: "main"
     labels:
       - "github dependencies"
     groups:
